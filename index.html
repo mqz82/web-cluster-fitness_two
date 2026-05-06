@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cluster Fitness - Box de entrenamiento en Mapocho 3226, Santiago, Chile. CrossFit, GAP, Zumba, Metcon y Musculación.">
+    <title>Cluster Fitness | Entrena en el mejor box de Santiago</title>
+    
+    <!-- Google Fonts: Bebas Neue y Barlow -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- ============================================
+         FONDO CON EFECTO DE HUMO/NEBLINA
+         radial-gradient con blur para efecto decorativo
+    ============================================= -->
+    <div class="smoke-effect"></div>
+    <div class="smoke-effect-2"></div>
+
+    <!-- ============================================
+         1. NAVBAR FIJA
+         Logo + navegación + botón CTA
+    ============================================= -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo: CLUSTER (blanco bold) + fitness (cian italic) + hexágono -->
+            <a href="#" class="logo">
+                <span class="logo-main">CLUSTER</span>
+                <span class="logo-sub">fitness</span>
+                <div class="logo-hexagon">
+                    <svg viewBox="0 0 50 50" width="40" height="40">
+                        <polygon points="25,2 47,14 47,36 25,48 3,36 3,14" fill="none" stroke="var(--color-primary)" stroke-width="2"/>
+                        <polygon points="25,10 40,18 40,32 25,40 10,32 10,18" fill="var(--color-primary)" opacity="0.3"/>
+                    </svg>
+                </div>
+            </a>
+            
+            <!-- Links de navegación -->
+            <ul class="nav-links">
+                <li><a href="#disciplines">Disciplinas</a></li>
+                <li><a href="#plans">Planes</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#schedule">Horarios</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            
+            <!-- Botón CTA -->
+            <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn-cta">
+                Reserva tu clase
+            </a>
+            
+            <!-- Menú hamburguesa para mobile -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Menú mobile -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="#disciplines">Disciplinas</a></li>
+                <li><a href="#plans">Planes</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#schedule">Horarios</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn-cta-mobile">
+                Reserva tu clase
+            </a>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         2. HERO SECTION
+         Frase de impacto + efectos de humo cian/fucsia
+    ============================================= -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Entrena desde cero<br>
+                <span class="highlight">o sube el nivel</span> 💪
+            </h1>
+            <p class="hero-subtitle">
+                El mejor box de Santiago te espera. Transforma tu cuerpo y tu mente con los mejores profesionales.
+            </p>
+            <div class="hero-buttons">
+                <a href="#plans" class="btn btn-primary">Ver planes</a>
+                <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn btn-secondary">Primera clase gratis</a>
+            </div>
+        </div>
+        <div class="hero-decoration">
+            <div class="glow glow-1"></div>
+            <div class="glow glow-2"></div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         3. DISCIPLINAS
+         5 cards: CrossFit, GAP, Zumba, Metcon, Upper Body
+    ============================================= -->
+    <section class="disciplines" id="disciplines">
+        <div class="container">
+            <h2 class="section-title">Nuestras Disciplinas</h2>
+            <p class="section-subtitle">Entrena con los mejores instructores certificados</p>
+            
+            <div class="discipline-grid">
+                <!-- CrossFit -->
+                <div class="discipline-card" data-animate>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <circle cx="32" cy="32" r="28" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M20 32 L32 20 L44 32 L32 44 Z" fill="var(--color-primary)" opacity="0.8"/>
+                            <circle cx="32" cy="32" r="8" fill="var(--color-accent)"/>
+                        </svg>
+                    </div>
+                    <h3>CrossFit</h3>
+                    <p class="card-schedule">Lun a Vie • 6:00, 7:00, 8:30 AM</p>
+                    <p class="card-schedule">Lun a Vie • 18:00, 19:00, 20:00, 21:00 PM</p>
+                    <p class="card-price">Desde <span class="price">$38.000</span></p>
+                </div>
+                
+                <!-- GAP -->
+                <div class="discipline-card" data-animate>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <ellipse cx="32" cy="32" rx="20" ry="28" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M22 20 Q32 35 42 20" fill="none" stroke="var(--color-accent)" stroke-width="2"/>
+                            <path d="M22 44 Q32 35 42 44" fill="none" stroke="var(--color-accent)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>GAP</h3>
+                    <p class="card-schedule">Lun, Mie, Jue • 19:00</p>
+                    <p class="card-schedule">Vie • 18:00</p>
+                    <p class="card-price">Desde <span class="price">$26.000</span></p>
+                </div>
+                
+                <!-- Zumba -->
+                <div class="discipline-card" data-animate>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <circle cx="32" cy="20" r="12" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M15 55 Q20 30 32 30 Q44 30 49 55" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M22 38 L42 38" stroke="var(--color-primary)" stroke-width="2"/>
+                            <path d="M25 46 L39 46" stroke="var(--color-primary)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Zumba</h3>
+                    <p class="card-schedule">Lun, Mie • 21:00</p>
+                    <p class="card-schedule">Vie • 18:00</p>
+                    <p class="card-price">Desde <span class="price">$24.000</span></p>
+                </div>
+                
+                <!-- Metcon -->
+                <div class="discipline-card" data-animate>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <rect x="10" y="20" width="44" height="24" rx="4" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M18 32 L26 32" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M30 32 L38 32" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M42 32 L46 32" stroke="var(--color-primary)" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h3>Metcon</h3>
+                    <p class="card-schedule">Lun a Vie • 12:00 (Mediodía)</p>
+                    <p class="card-schedule">Sáb • 10:00</p>
+                    <p class="card-price">Desde <span class="price">$28.000</span></p>
+                </div>
+                
+                <!-- Musculación Upper Body -->
+                <div class="discipline-card" data-animate>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <circle cx="32" cy="16" r="10" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M22 28 L22 50" stroke="var(--color-primary)" stroke-width="4"/>
+                            <path d="M42 28 L42 50" stroke="var(--color-primary)" stroke-width="4"/>
+                            <path d="M22 34 L42 34" stroke="var(--color-accent)" stroke-width="4"/>
+                            <path d="M22 44 L42 44" stroke="var(--color-accent)" stroke-width="4"/>
+                        </svg>
+                    </div>
+                    <h3>Upper Body</h3>
+                    <p class="card-schedule">Lun, Mie, Vie • 9:00</p>
+                    <p class="card-schedule">Mar, Jue • 17:00</p>
+                    <p class="card-price">Desde <span class="price">$30.000</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         4. PLANES Y PRECIOS
+         Tabla visual con datos reales
+    ============================================= -->
+    <section class="plans" id="plans">
+        <div class="container">
+            <h2 class="section-title">Planes y Precios</h2>
+            <p class="section-subtitle">Elige el plan que mejor se adapte a tus objetivos</p>
+            
+            <div class="plans-grid">
+                <!-- CrossFit Todo -->
+                <div class="plan-card" data-animate>
+                    <div class="plan-header">
+                        <h3>CrossFit Todo</h3>
+                        <span class="plan-badge">Más popular</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><span class="feature-label">8 clases</span><span class="feature-value">$38.000</span></li>
+                        <li><span class="feature-label">12 clases</span><span class="feature-value">$45.000</span></li>
+                        <li><span class="feature-label">16 clases</span><span class="feature-value">$50.000</span></li>
+                        <li><span class="feature-label">20 clases</span><span class="feature-value">$55.000</span></li>
+                    </ul>
+                    <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn btn-primary">Reservar</a>
+                </div>
+                
+                <!-- Plan AM Full -->
+                <div class="plan-card" data-animate>
+                    <div class="plan-header">
+                        <h3>Plan AM Full</h3>
+                        <span class="plan-badge">Mañana</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><span class="feature-label">12 clases</span><span class="feature-value">$33.000</span></li>
+                        <li><span class="feature-label">Acceso mañana</span><span class="feature-value">✓</span></li>
+                        <li><span class="feature-label">6:00 - 9:00</span><span class="feature-value">✓</span></li>
+                    </ul>
+                    <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn btn-primary">Reservar</a>
+                </div>
+                
+                <!-- GAP -->
+                <div class="plan-card" data-animate>
+                    <div class="plan-header">
+                        <h3>GAP</h3>
+                        <span class="plan-badge">Glúteo·Abdomen·Piernas</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><span class="feature-label">2 veces/sem</span><span class="feature-value">$26.000</span></li>
+                        <li><span class="feature-label">3 veces/sem</span><span class="feature-value">$36.000</span></li>
+                        <li><span class="feature-label">4 veces/sem</span><span class="feature-value">$40.000</span></li>
+                    </ul>
+                    <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn btn-primary">Reservar</a>
+                </div>
+                
+                <!-- Zumba -->
+                <div class="plan-card" data-animate>
+                    <div class="plan-header">
+                        <h3>Zumba</h3>
+                        <span class="plan-badge">Baile fitness</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><span class="feature-label">8 clases</span><span class="feature-value">$24.000</span></li>
+                        <li><span class="feature-label">12 clases</span><span class="feature-value">$34.000</span></li>
+                    </ul>
+                    <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn btn-primary">Reservar</a>
+                </div>
+                
+                <!-- Iniciados CrossFit -->
+                <div class="plan-card" data-animate>
+                    <div class="plan-header">
+                        <h3>Iniciados CrossFit</h3>
+                        <span class="plan-badge">Para principiantes</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><span class="feature-label">12 clases</span><span class="feature-value">$35.000</span></li>
+                        <li><span class="feature-label">Fundamentos</span><span class="feature-value">✓</span></li>
+                        <li><span class="feature-label">Técnica segura</span><span class="feature-value">✓</span></li>
+                    </ul>
+                    <a href="https://boxmagic.cl/sport_page/ClusterCF" target="_blank" class="btn btn-primary">Reservar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         5. SERVICIOS EXTRAS
+         Nutricionista, Kinesiología, Quiropraxia
+    ============================================= -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Servicios Extras</h2>
+            <p class="section-subtitle">Complementa tu entrenamiento con profesionales especializados</p>
+            
+            <div class="services-grid">
+                <!-- Nutricionista -->
+                <div class="service-card" data-animate>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <circle cx="32" cy="20" r="12" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M20 50 Q24 38 32 38 Q40 38 44 50" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M28 28 L28 32 L36 32 L36 28" fill="none" stroke="var(--color-primary)" stroke-width="2"/>
+                            <circle cx="24" cy="14" r="2" fill="var(--color-primary)"/>
+                            <circle cx="40" cy="14" r="2" fill="var(--color-primary)"/>
+                        </svg>
+                    </div>
+                    <h3>Nutricionista</h3>
+                    <p>Plans nutricionales personalizados para optimizar tu rendimiento y alcanzar tus objetivos.</p>
+                </div>
+                
+                <!-- Kinesiología -->
+                <div class="service-card" data-animate>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <rect x="20" y="10" width="24" height="40" rx="4" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M26 20 L38 20" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M26 28 L38 28" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M26 36 L38 36" stroke="var(--color-accent)" stroke-width="3"/>
+                            <circle cx="32" cy="48" r="4" fill="var(--color-primary)"/>
+                        </svg>
+                    </div>
+                    <h3>Kinesiología</h3>
+                    <p>Rehabilitación de lesiones, prevención y tratamiento para mejorar tu rendimiento deportivo.</p>
+                </div>
+                
+                <!-- Quiropraxia -->
+                <div class="service-card" data-animate>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <path d="M20 32 Q32 20 44 32 Q32 44 20 32" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                            <path d="M32 16 L32 24" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M32 40 L32 48" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M16 32 L24 32" stroke="var(--color-accent)" stroke-width="3"/>
+                            <path d="M40 32 L48 32" stroke="var(--color-accent)" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h3>Quiropraxia</h3>
+                    <p>Ajustes quiroprácticos para aliviar dolores, mejorar postura y optimizar movimiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         6. HORARIOS REALES
+         AM, PM, GAP, Zumba
+    ============================================= -->
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <h2 class="section-title">Horarios</h2>
+            <p class="section-subtitle">Consulta nuestros horarios y encuentra el que mejor se adapte a ti</p>
+            
+            <div class="schedule-grid">
+                <!-- Horario AM -->
+                <div class="schedule-card" data-animate>
+                    <h3>Horario AM</h3>
+                    <div class="schedule-times">
+                        <span class="time">6:00</span>
+                        <span class="time">7:00</span>
+                        <span class="time">8:30</span>
+                    </div>
+                    <p class="schedule-days">Lun • Mie • Vie</p>
+                </div>
+                
+                <!-- Horario PM -->
+                <div class="schedule-card" data-animate>
+                    <h3>Horario PM</h3>
+                    <div class="schedule-times">
+                        <span class="time">18:00</span>
+                        <span class="time">19:00</span>
+                        <span class="time">20:00</span>
+                        <span class="time">21:00</span>
+                    </div>
+                    <p class="schedule-days">Lun a Vie</p>
+                </div>
+                
+                <!-- GAP -->
+                <div class="schedule-card" data-animate>
+                    <h3>GAP</h3>
+                    <div class="schedule-times">
+                        <span class="time">19:00</span>
+                    </div>
+                    <p class="schedule-days">Lun • Mie • Jue</p>
+                    <p class="schedule-days-alt">Vie 18:00</p>
+                </div>
+                
+                <!-- Zumba -->
+                <div class="schedule-card" data-animate>
+                    <h3>Zumba</h3>
+                    <div class="schedule-times">
+                        <span class="time">21:00</span>
+                    </div>
+                    <p class="schedule-days">Lun • Mie</p>
+                    <p class="schedule-days-alt">Vie 18:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         7. COMUNIDAD
+         Frase motivacional + mosaico tipo Instagram
+    ============================================= -->
+    <section class="community" id="community">
+        <div class="container">
+            <h2 class="section-title">Nuestra Comunidad</h2>
+            <p class="community-quote">
+                "No entrenas solo para verte mejor, entrenas para sentirte imparable"
+            </p>
+            
+            <!-- Mosaico tipo Instagram grid (placeholders) -->
+            <div class="instagram-grid">
+                <div class="insta-item insta-1" data-animate>
+                    <div class="insta-placeholder">
+                        <svg viewBox="0 0 64 64" width="48" height="48">
+                            <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <circle cx="32" cy="28" r="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <circle cx="32" cy="48" r="2" fill="var(--color-muted)"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="insta-item insta-2" data-animate>
+                    <div class="insta-placeholder">
+                        <svg viewBox="0 0 64 64" width="48" height="48">
+                            <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <path d="M20 40 L32 28 L44 40" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="insta-item insta-3" data-animate>
+                    <div class="insta-placeholder">
+                        <svg viewBox="0 0 64 64" width="48" height="48">
+                            <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <circle cx="24" cy="28" r="6" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <path d="M40 40 L40 20 L48 20 L48 40" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="insta-item insta-4" data-animate>
+                    <div class="insta-placeholder">
+                        <svg viewBox="0 0 64 64" width="48" height="48">
+                            <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <path d="M24 24 L40 40 M40 24 L24 40" stroke="var(--color-muted)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="insta-item insta-5" data-animate>
+                    <div class="insta-placeholder">
+                        <svg viewBox="0 0 64 64" width="48" height="48">
+                            <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <polygon points="32,20 40,36 24,36" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="insta-item insta-6" data-animate>
+                    <div class="insta-placeholder">
+                        <svg viewBox="0 0 64 64" width="48" height="48">
+                            <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                            <circle cx="32" cy="32" r="12" fill="none" stroke="var(--color-muted)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="https://www.instagram.com/cluster.fitness.cl" target="_blank" class="btn btn-secondary">
+                Síguenos en Instagram
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================
+         8. CONTACTO
+         Formulario + mapa + datos de contacto
+    ============================================= -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contáctanos</h2>
+            <p class="section-subtitle">Escríbenos y te responderemos a la brevedad</p>
+            
+            <div class="contact-grid">
+                <!-- Formulario -->
+                <div class="contact-form" data-animate>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" required placeholder="Tu nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+56 9 XXXX XXXX">
+                        </div>
+                        <div class="form-group">
+                            <label for="discipline">Disciplina de interés</label>
+                            <select id="discipline" name="discipline">
+                                <option value="">Selecciona una disciplina</option>
+                                <option value="crossfit">CrossFit</option>
+                                <option value="gap">GAP</option>
+                                <option value="zumba">Zumba</option>
+                                <option value="metcon">Metcon</option>
+                                <option value="upper">Upper Body</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                    </form>
+                </div>
+                
+                <!-- Mapa -->
+                <div class="contact-map" data-animate>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3325.567891234567!2d-70.68999999999999!3d-33.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662a7b123456789%3A0xabcdef123456789!2sMapocho%203226%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1234567890000!5m2!1ses!2scl"
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Mapa de ubicación Cluster Fitness">
+                    </iframe>
+                </div>
+                
+                <!-- Datos de contacto -->
+                <div class="contact-info" data-animate>
+                    <h3>Información de contacto</h3>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--color-primary)"/>
+                            <circle cx="12" cy="9" r="2.5" fill="var(--color-accent)"/>
+                        </svg>
+                        <span>Mapocho 3226, Santiago, Chile<br><small>(entre Matucana y Chacabuco)</small></span>
+                    </div>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="var(--color-primary)"/>
+                        </svg>
+                        <span>+56 9 XXXX XXXX</span>
+                    </div>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="var(--color-primary)"/>
+                        </svg>
+                        <span>contacto@cluster.fitness.cl</span>
+                    </div>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12 2.1c-3.4 0-6.7 1.4-9.1 3.9 2.9 2.5 6.9 4 11.1 4s8.2-1.5 11.1-4c-2.4-2.5-5.7-3.9-9.1-3.9zM12 15c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z" fill="var(--color-accent)"/>
+                        </svg>
+                        <span>cluster.fitness.cl</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         9. FOOTER
+         Logo + links + redes sociales
+    ============================================= -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Logo footer -->
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <span class="logo-main">CLUSTER</span>
+                        <span class="logo-sub">fitness</span>
+                    </a>
+                    <p>El mejor box de entrenamiento en Santiago</p>
+                </div>
+                
+                <!-- Links útiles -->
+                <div class="footer-links">
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="#disciplines">Disciplinas</a></li>
+                        <li><a href="#plans">Planes</a></li>
+                        <li><a href="#services">Servicios</a></li>
+                        <li><a href="#schedule">Horarios</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Redes sociales -->
+                <div class="footer-social">
+                    <h4>Síguenos</h4>
+                    <div class="social-icons">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/cluster.fitness.cl" target="_blank" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="var(--color-white)"/>
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="#" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="var(--color-white)"/>
+                            </svg>
+                        </a>
+                        <!-- WhatsApp -->
+                        <a href="#" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.162-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="var(--color-white)"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Cluster Fitness. Todos los derechos reservados.</p>
+                <p class="address">Mapocho 3226, Santiago, Chile</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
