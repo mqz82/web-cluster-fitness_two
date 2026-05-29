@@ -500,15 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     serviceCards.forEach(function (card) {
         var specialistType = card.getAttribute('data-specialist');
-
         card.addEventListener('click', function () { openModal(specialistType); });
-
-        card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openModal(specialistType);
-            }
-        });
     });
 
     if (modalClose) {

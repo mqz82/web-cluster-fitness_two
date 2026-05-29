@@ -728,6 +728,8 @@ a { text-decoration: none; color: inherit; }
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    font-family: inherit; font-size: 100%; color: inherit; line-height: inherit;
+    -webkit-appearance: none; appearance: none; width: 100%;
 }
 
 .service-card::before {
@@ -1100,9 +1102,15 @@ a { text-decoration: none; color: inherit; }
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    outline: none; border-color: var(--color-primary);
+    border-color: var(--color-primary);
     box-shadow: 0 0 20px rgba(0, 229, 255, 0.12);
     background: rgba(255, 255, 255, 0.06);
+}
+.form-group input:focus-visible,
+.form-group select:focus-visible,
+.form-group textarea:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--color-muted); }
@@ -1345,6 +1353,13 @@ a { text-decoration: none; color: inherit; }
 .tag-upper { background: rgba(150, 100, 255, 0.12); color: #9664ff; }
 
 .schedule-class-time { font-size: 0.75rem; color: var(--color-muted); }
+.tag-stacked { margin-top: 2px; }
+
+.schedule-legend-dot.tag-crossfit { background: rgba(0, 229, 255, 0.4); }
+.schedule-legend-dot.tag-gap { background: rgba(255, 0, 200, 0.4); }
+.schedule-legend-dot.tag-zumba { background: rgba(255, 150, 0, 0.4); }
+.schedule-legend-dot.tag-metcon { background: rgba(0, 200, 100, 0.4); }
+.schedule-legend-dot.tag-upper { background: rgba(150, 100, 255, 0.4); }
 
 /* ============================================
    FAQ ACORDEÓN
