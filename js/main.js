@@ -367,6 +367,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }, { passive: true });
     }
 
+    /* ============================================
+       PARALLAX: diagonal stripe on .hero::after
+    ============================================ */
+    var heroEl = document.querySelector('.hero');
+    if (heroEl) {
+        window.addEventListener('scroll', function () {
+            var scrolled = window.pageYOffset;
+            var stripeRate = scrolled * 0.15;
+            heroEl.style.setProperty('--stripe-offset', stripeRate + 'px');
+        }, { passive: true });
+    }
+
 
     /* ============================================
        LAZY LOADING PARA IFRAMES (MAPA)
@@ -465,7 +477,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('specialistInsta').textContent = data.instagramText;
 
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('no-scroll');
+        var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
 
         var focusable = getModalFocusable();
         if (focusable.length > 0) focusable[0].focus();
@@ -473,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeModal() {
         modal.classList.remove('active');
-        document.body.style.overflow = '';
+        document.documentElement.classList.remove('no-scroll');
         if (lastFocusedEl) lastFocusedEl.focus();
     }
 
