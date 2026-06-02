@@ -683,17 +683,17 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ============================================
        WHATSAPP FLOAT: ocultar al llegar al footer
     ============================================ */
-    var whatsappBtn = document.getElementById('whatsappFloat');
+    var whatsappFloatBtn = document.getElementById('whatsappFloatBtn');
     var footer = document.querySelector('.footer');
-    if (whatsappBtn && footer) {
+    if (whatsappFloatBtn && footer) {
         var waObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
-                    whatsappBtn.style.opacity = '0';
-                    whatsappBtn.style.pointerEvents = 'none';
+                    whatsappFloatBtn.style.opacity = '0';
+                    whatsappFloatBtn.style.pointerEvents = 'none';
                 } else {
-                    whatsappBtn.style.opacity = '1';
-                    whatsappBtn.style.pointerEvents = 'auto';
+                    whatsappFloatBtn.style.opacity = '1';
+                    whatsappFloatBtn.style.pointerEvents = 'auto';
                 }
             });
         }, { rootMargin: '0px 0px 60px 0px' });
