@@ -3,173 +3,13 @@
  * Navbar scroll, animations, Instagram embeds, mouse tracking, mobile menu
  */
 
-/* ============================================
-   INSTAGRAM CONFIG
-   ⚠️ REEMPLAZA estos shortcodes con los códigos reales de tus posts
-   Puedes obtenerlos de la URL de cada post/reel de Instagram:
-   https://www.instagram.com/reel/SHORTCODE/
-   https://www.instagram.com/p/SHORTCODE/
-   ============================================ */
-var INSTAGRAM_CONFIG = {
-    // Videos en la sección "Míranos en Acción" (reels o posts con video)
-    // type: 'reel' para reels, 'post' para publicaciones con video
-    reels: [
-        { type: 'post', shortcode: 'DXZqTwkDlHE', caption: 'WOD del dia' },
-        { type: 'reel', shortcode: 'DYAqZt-OiBy', caption: 'Nueva clase GAP' },
-        { type: 'reel', shortcode: '' }
-    ].filter(function (s) { return s.shortcode.length > 0; }),
-
-    // Posts del feed - aparecen en la sección "Nuestra Comunidad"
-    posts: [
-        'DXZqTwkDlHE',  // Post 1
-        'DVqva_dET5f',             // Reemplazar con shortcode del post 2
-        'DVoITMwDksd',             // Reemplazar con shortcode del post 3
-        '',             // Reemplazar con shortcode del post 4
-        '',             // Reemplazar con shortcode del post 5
-        ''              // Reemplazar con shortcode del post 6
-    ].filter(function (s) { return s.length > 0; }),
-};
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    /* ============================================
-       GENERAR VIDEO CARDS DE INSTAGRAM (nativas)
-       Sin iframes: cards con icono play + click a Instagram
-    ============================================ */
-    var reelsGrid = document.getElementById('reelsGrid');
 
-    function buildReelCard(item) {
-        var urlBase = item.type === 'reel' ? 'https://www.instagram.com/reel/' : 'https://www.instagram.com/p/';
-        var instagramUrl = urlBase + item.shortcode + '/';
-        var isReel = item.type === 'reel';
-        var caption = item.caption || '';
 
-        var card = document.createElement('a');
-        card.className = 'reel-card';
-        card.setAttribute('data-animate', '');
-        card.href = instagramUrl;
-        card.target = '_blank';
-        card.rel = 'noopener';
-        card.setAttribute('aria-label', (isReel ? 'Ver reel' : 'Ver video') + ' en Instagram');
 
-        card.innerHTML =
-            '<div class="reel-play-btn">' +
-                '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>' +
-            '</div>' +
-            '<div class="reel-card-info">' +
-                '<span class="reel-card-badge' + (isReel ? ' reel-badge-reel' : '') + '">' + (isReel ? 'Reel' : 'Video') + '</span>' +
-                (caption ? '<p class="reel-card-caption">' + caption + '</p>' : '') +
-            '</div>';
 
-        reelsGrid.appendChild(card);
-    }
-
-    if (reelsGrid && INSTAGRAM_CONFIG.reels.length > 0) {
-        INSTAGRAM_CONFIG.reels.forEach(function (item) {
-            buildReelCard(item);
-        });
-    } else if (reelsGrid) {
-        for (var r = 0; r < 3; r++) {
-            var card = document.createElement('div');
-            card.className = 'reel-card';
-            card.setAttribute('data-animate', '');
-            card.innerHTML = '<div class="reel-play-btn">' +
-                '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>' +
-                '</div>' +
-                '<div class="reel-card-info">' +
-                    '<span class="reel-card-badge">Video</span>' +
-                    '<p class="reel-card-caption">Agrega tus reels en main.js</p>' +
-                '</div>';
-            reelsGrid.appendChild(card);
-        }
-    }
-
-    /* ============================================
-       GENERAR EMBEDS DE INSTAGRAM GRID (lazy)
-       Solo cargan cuando el usuario scrollea cerca
-    ============================================ */
-    var instagramGrid = document.getElementById('instagramGrid');
-    var gridLoaded = false;
-
-    function createGridPlaceholders() {
-        if (!instagramGrid) return;
-        var count = INSTAGRAM_CONFIG.posts.length > 0 ? INSTAGRAM_CONFIG.posts.length : 6;
-        for (var p = 0; p < count; p++) {
-            var item = document.createElement('div');
-            item.className = 'insta-item';
-            item.setAttribute('data-animate', '');
-            item.setAttribute('data-post-index', p);
-            item.innerHTML = '<div class="insta-placeholder">' +
-                '<svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" width="42" height="42">' +
-                '<rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>' +
-                '<circle cx="32" cy="28" r="8" fill="none" stroke="currentColor" stroke-width="2"/>' +
-                '<circle cx="32" cy="48" r="1.5" fill="currentColor"/>' +
-                '</svg>' +
-                '</div>';
-            instagramGrid.appendChild(item);
-        }
-    }
-
-    function loadGridIframes() {
-        if (gridLoaded || !instagramGrid) return;
-        gridLoaded = true;
-
-        if (INSTAGRAM_CONFIG.posts.length > 0) {
-            var items = instagramGrid.querySelectorAll('.insta-item[data-post-index]');
-            INSTAGRAM_CONFIG.posts.forEach(function (shortcode, i) {
-                if (items[i]) {
-                    var iframe = document.createElement('iframe');
-                    iframe.src = 'https://www.instagram.com/p/' + shortcode + '/embed/';
-                    iframe.allow = 'autoplay; encrypted-media';
-                    iframe.allowFullscreen = true;
-                    iframe.loading = 'lazy';
-                    iframe.title = 'Instagram Post';
-                    items[i].innerHTML = '';
-                    items[i].appendChild(iframe);
-                }
-            });
-        } else {
-            var items = instagramGrid.querySelectorAll('.insta-item[data-post-index]');
-            items.forEach(function (item) {
-                item.innerHTML = '<div class="insta-placeholder">' +
-                    '<svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" width="42" height="42">' +
-                    '<rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>' +
-                    '<circle cx="32" cy="28" r="8" fill="none" stroke="currentColor" stroke-width="2"/>' +
-                    '<circle cx="32" cy="48" r="1.5" fill="currentColor"/>' +
-                    '</svg>' +
-                    '</div>';
-            });
-        }
-    }
-
-    createGridPlaceholders();
-
-    /* ============================================
-       INTERSECTION OBSERVER PARA LAZY LOAD
-       Carga los iframes cuando la sección se acerca
-    ============================================ */
-    var sectionsToWatch = [];
-    if (instagramGrid) sectionsToWatch.push({ el: instagramGrid.closest('section'), loader: loadGridIframes });
-
-    if (sectionsToWatch.length > 0) {
-        var lazyObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    var section = entry.target;
-                    sectionsToWatch.forEach(function (s) {
-                        if (s.el === section && typeof s.loader === 'function') {
-                            s.loader();
-                        }
-                    });
-                    lazyObserver.unobserve(section);
-                }
-            });
-        }, { rootMargin: '300px' });
-
-        sectionsToWatch.forEach(function (s) {
-            if (s.el) lazyObserver.observe(s.el);
-        });
-    }
 
     /* ============================================
        MOUSE TRACKING PARA EFECTOS EN CARDS
@@ -546,9 +386,16 @@ document.addEventListener('DOMContentLoaded', function () {
             question.addEventListener('click', function () {
                 var isActive = item.classList.contains('active');
                 // Cerrar todos
-                faqItems.forEach(function (other) { other.classList.remove('active'); });
+                faqItems.forEach(function (other) {
+                    other.classList.remove('active');
+                    var btn = other.querySelector('.faq-question');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                });
                 // Abrir el clickeado si no estaba abierto
-                if (!isActive) item.classList.add('active');
+                if (!isActive) {
+                    item.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                }
             });
         }
     });
@@ -679,6 +526,58 @@ document.addEventListener('DOMContentLoaded', function () {
         statsObserver.observe(heroStats);
     }
 
+
+    /* ============================================
+       REELS: Click en la tarjeta → play/pause.
+       Quien está reproduciendo se pausa al
+       hacer click en otra tarjeta.
+    ============================================ */
+    var reelVideos = document.querySelectorAll('.reel-card .instagram-card-media video');
+
+    function pauseAllReelsExcept(exceptVideo) {
+        reelVideos.forEach(function (v) {
+            if (v !== exceptVideo && !v.paused) {
+                v.pause();
+                v.currentTime = 0;
+            }
+        });
+    }
+
+    reelVideos.forEach(function (video) {
+        var card = video.closest('.instagram-card');
+
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('a')) return;
+            if (video.paused) {
+                pauseAllReelsExcept(video);
+                video.muted = false;
+                video.play()['catch'](function () {});
+            } else {
+                video.pause();
+            }
+        });
+
+        video.addEventListener('ended', function () {
+            video.currentTime = 0;
+        });
+    });
+
+    /* Pausar todos los reels si la seccion sale del viewport */
+    var reelsSection = document.getElementById('reels');
+    if (reelsSection) {
+        var reelsObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) {
+                    reelVideos.forEach(function (v) {
+                        if (!v.paused) {
+                            v.pause();
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0 });
+        reelsObserver.observe(reelsSection);
+    }
 
     /* ============================================
        WHATSAPP FLOAT: ocultar al llegar al footer
