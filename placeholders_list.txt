@@ -1,0 +1,22 @@
+Versión mejorada — 2026-06-04 — Placeholder List
+
+Por favor, reemplace los siguientes elementos antes de publicar el sitio:
+
+1.  **Imágenes del Hero:**
+    *   `assets/img/hero-bg.jpg` (Placeholder temporal).
+    *   **Reemplazar con:** Una imagen de fondo real y de alta resolución para la sección Hero. Preferiblemente en formato WebP.
+
+2.  **Imágenes de la Galería de Comunidad:**
+    *   `assets/img/comunidad/foto-3.webp` (Placeholder temporal).
+    *   `assets/img/comunidad/foto-4.webp` (Placeholder temporal).
+    *   `assets/img/comunidad/foto-5.webp` (Placeholder temporal).
+    *   `assets/img/comunidad/foto-6.webp` (Placeholder temporal).
+    *   **Reemplazar con:** Fotos reales y representativas de la comunidad del box. Preferiblemente en formato WebP.
+
+3.  **Imágenes de Coaches y Testimonios:**
+    *   Si hay imágenes de coaches o testimonios que son placeholders, reemplácelas con fotos reales.
+    *   **Tamaño recomendado:** Aproximadamente 400x400px, cuadradas, en formato JPG o WebP.
+
+4.  **Sitemap.xml y Robots.txt:**
+    *   **URL Base:** En `sitemap.xml` y `robots.txt`, la URL base es `http://localhost:8000/`.
+    *   **Reemplazar con:** La URL real del sitio una vez que esté desplegado en producción (ej. `https://www.tusitio.com/`).

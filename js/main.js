@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (modal) {
         modal.addEventListener('keydown', function (e) {
             if (e.key !== 'Tab' || !modal.classList.contains('active')) return;
-            var focusable = getModalFocusable();
+            var focusable = getMediaLightboxFocusable();
             if (focusable.length === 0) return;
             var first = focusable[0];
             var last = focusable[focusable.length - 1];
@@ -375,12 +375,140 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'Escape') {
             if (modal && modal.classList.contains('active')) {
                 closeModal();
+            } else if (mediaLightbox && mediaLightbox.classList.contains('active')) {
+                closeMediaLightbox();
             } else if (mobileMenu && mobileMenu.classList.contains('active')) {
                 toggleMobileMenu(false);
             }
         }
     });
 
+
+    /* ============================================
+       MEDIA LIGHTBOX (IMAGES & VIDEOS)
+    ============================================ */
+    var mediaLightbox = document.getElementById('mediaLightbox');
+    var mediaLightboxClose = document.querySelector('.media-lightbox-close');
+    var mediaLightboxBody = document.querySelector('.media-lightbox-body');
+    var mediaLightboxTitle = document.querySelector('.media-lightbox-title');
+    var mediaExpandBtns = document.querySelectorAll('.media-expand-btn');
+
+    var lastFocusedMediaEl = null;
+    var currentMediaPlaying = null; // To keep track of video playing in lightbox
+
+    function getMediaLightboxFocusable() {
+        if (!mediaLightbox) return [];
+        return mediaLightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    }
+
+    function openMediaLightbox(src, type, title, poster = null) {
+        lastFocusedMediaEl = document.activeElement; // Store element that opened the lightbox
+
+        mediaLightboxBody.innerHTML = ''; // Clear previous content
+        mediaLightboxTitle.textContent = title;
+
+        if (type === 'image') {
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = title;
+            img.loading = 'lazy';
+            mediaLightboxBody.appendChild(img);
+        } else if (type === 'video') {
+            var video = document.createElement('video');
+            video.src = src;
+            video.controls = true;
+            video.preload = 'metadata';
+            if (poster) {
+                video.poster = poster;
+            }
+            mediaLightboxBody.appendChild(video);
+            currentMediaPlaying = video; // Store reference to current video
+        }
+
+        mediaLightbox.classList.add('active');
+        document.documentElement.classList.add('no-scroll');
+        var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
+
+        var focusable = getMediaLightboxFocusable();
+        if (focusable.length > 0) focusable[0].focus(); // Focus close button
+    }
+
+    function closeMediaLightbox() {
+        if (currentMediaPlaying && !currentMediaPlaying.paused) {
+            currentMediaPlaying.pause(); // Pause video if playing
+        }
+        currentMediaPlaying = null; // Clear video reference
+
+        mediaLightbox.classList.remove('active');
+        document.documentElement.classList.remove('no-scroll');
+        
+        if (lastFocusedMediaEl) {
+            lastFocusedMediaEl.focus(); // Restore focus to element that opened lightbox
+        }
+        mediaLightboxBody.innerHTML = ''; // Clean up content
+        mediaLightboxTitle.textContent = ''; // Clean up title
+    }
+
+    if (mediaLightbox) {
+        mediaLightbox.addEventListener('keydown', function (e) {
+            if (e.key !== 'Tab' || !mediaLightbox.classList.contains('active')) return;
+            var focusable = getModalFocusable(); // Reusing specialist modal's focusable helper. Should ideally be getMediaLightboxFocusable
+            if (focusable.length === 0) return;
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+
+        // Click outside to close
+        mediaLightbox.addEventListener('click', function (e) {
+            if (e.target === mediaLightbox) {
+                closeMediaLightbox();
+            }
+        });
+    }
+
+    if (mediaLightboxClose) {
+        mediaLightboxClose.addEventListener('click', closeMediaLightbox);
+    }
+
+    // Add event listeners to expand buttons
+    mediaExpandBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var card = btn.closest('.instagram-card'); // Parent card (community or reel)
+            var mediaSrc, mediaType, mediaTitle, posterSrc = null;
+
+            if (card.classList.contains('community-card')) {
+                var img = card.querySelector('.community-media img');
+                if (img) {
+                    mediaSrc = img.src;
+                    mediaType = 'image';
+                    mediaTitle = img.alt || card.querySelector('.instagram-card-title').textContent;
+                }
+            } else if (card.classList.contains('reel-card')) {
+                var video = card.querySelector('.instagram-card-media video');
+                if (video) {
+                    mediaSrc = video.querySelector('source').src; // Get src from the <source> tag
+                    mediaType = 'video';
+                    mediaTitle = card.querySelector('.instagram-card-title').textContent;
+                    posterSrc = video.poster;
+                }
+            }
+            if (mediaSrc && mediaType) {
+                openMediaLightbox(mediaSrc, mediaType, mediaTitle, posterSrc);
+            }
+        });
+    });
 
     /* ============================================
        FAQ ACORDEÓN
@@ -554,6 +682,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         card.addEventListener('click', function (e) {
             if (e.target.closest('a')) return;
+        if (e.target.closest('.media-expand-btn')) return;
             if (video.paused) {
                 pauseAllReelsExcept(video);
                 video.muted = false;
