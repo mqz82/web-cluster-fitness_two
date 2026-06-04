@@ -1,0 +1,91 @@
+# AGENTS.md — Cluster Fitness
+
+Static SPA site for a Santiago gym. Single `index.html` entrypoint.
+
+## Commands
+
+| Action | Command |
+|--------|---------|
+| Serve locally | `python -m http.server 8000 --bind 127.0.0.1` |
+| Live Server (VSCode) | Install "Live Server" extension, right-click `index.html` |
+| Minify CSS | `npx clean-css-cli -o css/styles.min.css css/styles.css` |
+| Minify JS | `npx terser js/main.js -o js/main.min.js -c passes=2 -m` |
+
+Both `clean-css-cli` and `terser` are local deps (in `package.json`). Run from repo root.
+
+After any change to `styles.css` or `main.js`, **re-minify**. The HTML loads `.min.css` and `.min.js` in production. For debugging, switch HTML to load the unminified sources.
+
+## Architecture
+
+- **SPA**: `index.html` → `css/styles.css` + `js/main.js`. No framework, no build step.
+- CSS in `<head>`, JS at bottom of `<body>` (render-blocking optimization).
+- Video files in `assets/videos/reels/` (MP4), images in `assets/img/` (prefer WebP).
+
+## Mobile Menu — Critical Structure
+
+```html
+<body>
+  <nav id="navbar">                          <!-- z-index: 9997 -->
+    <div class="nav-container">
+      <a class="logo">...</a>
+      <ul class="nav-links">...</ul>         <!-- display: none on ≤900px -->
+    </div>
+  </nav>
+  <button id="menuToggle">                   <!-- z-index: 10000, direct body child -->
+    <span></span><span></span><span></span>
+  </button>
+  <div id="mobileMenu">...</div>              <!-- z-index: 9998, direct body child -->
+  <main id="main-content">...</main>
+</body>
+```
+
+- `.menu-toggle` and `.mobile-menu` are **direct children of `<body>`**, not inside `<nav>`.
+- Both use `position: fixed`. Toggle at `top: 18px; right: 20px;`.
+- `html.no-scroll` is toggled by JS to lock body scroll when menu is open.
+
+## Z-index Hierarchy
+
+| Element | z-index |
+|---------|---------|
+| `menu-toggle` | 10000 |
+| `modal-overlay`, `skip-link` | 9999 |
+| `mobile-menu` | 9998 |
+| `navbar` | 9997 |
+
+The toggle must remain above everything so it stays clickable when the menu is open.
+
+## Browser Quirks
+
+- Chrome and Brave (both Chromium) may render `position: fixed; right: 20px` and `width: 26px` on `<span>` children differently on initial load.
+- If a toggle or spans disappear in one browser but not the other, first: hard refresh (Ctrl+Shift+R). Second: check computed styles in DevTools. Third: try removing `!important` if it was used as a diagnostic.
+- Always test at 375px, 390px, 400px, and 768px after any mobile menu change.
+
+## CSS Conventions
+
+- Use `var(--color-*)`, `var(--font-*)` CSS custom properties (defined in `:root`).
+- Responsive breakpoints: 900px (nav collapse), 768px, 600px, 540px, 480px, 400px.
+- `prefers-reduced-motion` media queries used for accessibility (smoke effects, FAQ transitions, instagram cards).
+- `.glass-bg`, `--glass-blur`, `--glass-border` for glassmorphism cards.
+- Avoid `backdrop-filter` on the navbar — it creates a new containing block for `position: fixed` descendants (the toggle). Safe on `.mobile-menu`, `.modal-overlay` (no fixed descendants).
+
+## Images & Media
+
+- Prefer WebP over PNG/JPG for images. Convert with `sharp` (available in deps).
+- Background images use `data-lazy-bg` attribute + `IntersectionObserver` for lazy loading.
+- `<video>` elements inside the reels section are auto-paused by `IntersectionObserver` when scrolled out of view.
+- Video files are large (e.g. `zumba-coreografias.mp4` ~27 MB). Compress with HandBrake if needed.
+
+## Testing
+
+- Test in both Chrome and Brave after any CSS/JS change.
+- Hard refresh (Ctrl+Shift+R) is required after minifying — browser cache is aggressive.
+- For production deploys, add cache-busting query strings (`?v=1.0.1`) to CSS/JS references in `index.html`.
+
+## Accessibility
+
+- `aria-expanded`, `aria-controls`, `aria-label` on menu toggle.
+- `role="dialog"`, `aria-modal="true"` on mobile menu.
+- `aria-expanded`, `aria-controls`, `role="region"` on FAQ accordion.
+- `skip-link` for keyboard users.
+- `:focus-visible` outline on interactive elements.
+- `prefers-reduced-motion` respected.
