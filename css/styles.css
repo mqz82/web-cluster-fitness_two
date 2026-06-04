@@ -6,28 +6,29 @@
 
 /* Variables CSS */
 :root {
-    --color-bg: #0C0C0C; /* Slightly softer dark background */
-    --color-bg-alt: #1A1A1A; /* For alternating sections, also dark */
-    --color-primary: #00A676; /* Deep forest green/teal */
-    --color-primary-dim: rgba(0, 166, 118, 0.15);
-    --color-primary-mid: rgba(0, 166, 118, 0.4);
-    --color-accent: #FF5722; /* Vibrant, energetic orange */
-    --color-accent-dim: rgba(255, 87, 34, 0.12);
-    --color-accent-mid: rgba(255, 87, 34, 0.4);
-    --color-warm: #FFC107; /* Warm yellow, for badges/highlights */
-    --color-warm-dim: rgba(255, 193, 7, 0.15);
-    --color-white: #F8F8F8; /* Soft white */
-    --color-white-soft: #CCCCCC; /* Muted white for secondary text */
-    --color-muted: #888888; /* Darker muted gray */
-    --color-surface: rgba(255, 255, 255, 0.05); /* Slightly lighter surface for cards */
-    --color-border: rgba(255, 255, 255, 0.1);
-    --color-border-hover: rgba(255, 255, 255, 0.2);
-    --glass-bg: rgba(26, 26, 26, 0.8); /* Darker glassmorphism background */
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-blur: 16px;
-    --font-title: 'Bebas Neue', sans-serif;
-    --font-body: 'Barlow', sans-serif;
-    --font-weight-bold: 700;
+  /* Colores Base */
+  --color-bg: #1C1C1C; /* Negro grafito */
+  --color-bg-alt: #2F2F2F; /* Gris carbón */
+  --color-primary: #2ECEE1; /* Cian eléctrico */
+  --color-primary-dim: rgba(46, 206, 225, 0.15);
+  --color-primary-mid: rgba(46, 206, 225, 0.4);
+  --color-accent: #EA2EEE; /* Magenta fitness */
+  --color-accent-dim: rgba(234, 46, 238, 0.12);
+  --color-accent-mid: rgba(234, 46, 238, 0.4);
+  --color-warm: #EA2EEE; /* Magenta fitness (reemplaza amarillo) */
+  --color-warm-dim: rgba(234, 46, 238, 0.14);
+  --color-white: #FBFCFC; /* Blanco puro */
+  --color-white-soft: rgba(251, 252, 252, 0.82); /* Blanco puro con opacidad */
+  --color-muted: #3B3B3B; /* Gris cemento */
+  --color-surface: #2F2F2F; /* Gris carbón (ajustado para armonizar) */
+  --color-border: #4F5253; /* Gris medio frío */
+  --color-border-hover: rgba(79, 82, 83, 0.2); /* Ajustado para armonizar */
+  --glass-bg: rgba(26, 26, 26, 0.8); /* Darker glassmorphism background */
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: 16px;
+  --font-title: 'Bebas Neue', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-weight-bold: 700;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem; /* Adjusted for better legibility */
     --font-size-base: 1rem;   /* Adjusted for better legibility */
@@ -270,14 +271,14 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     background: var(--color-accent); /* Use solid accent for primary */
     color: var(--color-white);
     border-color: var(--color-accent);
-    box-shadow: 0 4px 18px rgba(255, 87, 34, 0.4); /* Adjusted shadow for accent */
+    box-shadow: 0 4px 18px rgba(234, 46, 238, 0.4); /* Adjusted shadow for accent */
 }
 
 .btn-primary:hover {
     background: var(--color-warm); /* Hover to warm color */
     border-color: var(--color-warm);
     transform: translateY(-2px);
-    box-shadow: 0 6px 22px rgba(255, 193, 7, 0.5); /* Adjusted shadow for warm */
+    box-shadow: 0 6px 22px rgba(234, 46, 238, 0.5); /* Adjusted shadow for warm */
 }
 .btn-primary:active { transform: translateY(0); }
 
@@ -286,31 +287,29 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     color: var(--color-primary); /* Secondary uses primary color text */
     border-color: var(--color-primary);
     backdrop-filter: blur(4px);
-    box-shadow: 0 2px 8px rgba(0, 166, 118, 0.2);
+    box-shadow: 0 2px 8px rgba(46, 206, 225, 0.2);
 }
 
 .btn-secondary:hover {
     background: var(--color-primary); /* Hover to primary color */
     color: var(--color-white);
-    box-shadow: 0 4px 16px rgba(0, 166, 118, 0.4);
+    box-shadow: 0 4px 16px rgba(46, 206, 225, 0.4);
     backdrop-filter: blur(8px);
     transform: translateY(-2px);
 }
 
 /* 1. NAVBAR */
 .navbar {
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 9997;
     padding: 18px 0;
     transition: background var(--transition-smooth), backdrop-filter var(--transition-smooth), border-bottom var(--transition-smooth), box-shadow var(--transition-smooth), padding var(--transition-smooth);
     background: transparent;
 }
 
 .navbar.scrolled {
-    background: rgba(12, 12, 12, 0.9); /* Use new --color-bg for scrolled state */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--color-border); /* Use new border color */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6); /* Slightly stronger shadow */
+    background: rgba(12, 12, 12, 0.97);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
     padding: 12px 0;
 }
 
@@ -343,28 +342,59 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 /* Hamburger */
 .menu-toggle {
     display: none; flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 8px; z-index: 1010;
+    background: none; border: none; cursor: pointer; padding: 8px;
+    position: fixed; top: 18px; right: 20px; z-index: 10000;
+    width: 44px; height: 44px; align-items: center; justify-content: center;
+    opacity: 1; visibility: visible; pointer-events: auto;
 }
 .menu-toggle span {
     width: 26px; height: 2px;
     background: var(--color-primary); /* Use primary color for burger lines */
     transition: transform var(--transition-smooth), opacity var(--transition-smooth); border-radius: 1px;
+    display: block;
+    transform-origin: center;
+}
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
 .mobile-menu {
-    display: none; position: absolute; top: 100%; left: 0;
-    width: 100%; background: var(--color-bg-alt); /* Use alt background for mobile menu */
-    backdrop-filter: blur(20px);
-    padding: 20px; flex-direction: column; gap: 15px;
-    border-bottom: 1px solid var(--color-border);
+    display: none; position: fixed; inset: 0;
+    z-index: 9998; background: rgba(12, 12, 12, 0.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 100px 24px 40px; flex-direction: column; gap: 15px;
+    overflow-y: auto; overscroll-behavior: contain;
 }
 .mobile-menu.active { display: flex; }
-.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 18px; }
-.mobile-menu a { font-size: var(--font-size-lg); color: var(--color-white); font-weight: 500; }
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.mobile-menu a {
+    display: block; padding: 16px 20px;
+    font-size: 1.3rem; color: var(--color-white); font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+.mobile-menu a:hover { background: var(--color-primary-dim); color: var(--color-primary); }
 .btn-cta-mobile {
     background: var(--color-accent); color: var(--color-white);
     padding: 16px; text-align: center; border-radius: var(--radius-sm);
     font-weight: var(--font-weight-bold); margin-top: 10px; font-size: var(--font-size-base);
+}
+
+/* Navbar responsive: desktop → hamburger */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+    .menu-toggle {
+        display: flex;
+    }
 }
 
 /* 2. HERO SECTION */
@@ -372,7 +402,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     min-height: 100vh; display: flex; align-items: center; /* Changed to align-items: center for vertical centering */
     position: relative;
     padding: 160px 20px 80px; overflow: visible;
-    background-image: url('../assets/img/box_1.jpeg');
+    background-image: url('../assets/img/box_1.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -425,7 +455,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(255, 87, 34, 0.4)); /* Adjusted shadow for accent */
+    filter: drop-shadow(0 0 20px rgba(234, 46, 238, 0.4)); /* Adjusted shadow for accent */
 }
 
 .hero-subtitle {
@@ -627,9 +657,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 /* 3. ¿POR QUÉ CLUSTER? (Why Us) */
 .why-us {
     padding: var(--section-padding);
-    background:
-        linear-gradient(180deg, var(--color-bg) 0%, rgba(12,12,12,0.9) 100%), /* Use new bg color */
-        url('../assets/img/box_2.jpeg') center/cover no-repeat fixed;
+    background: linear-gradient(180deg, var(--color-bg) 0%, rgba(12,12,12,0.9) 100%);
     content-visibility: auto;
 }
 
@@ -688,9 +716,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 /* 3.5. COACHES */
 .coaches {
     padding: var(--section-padding);
-    background: 
-        linear-gradient(180deg, var(--color-bg) 0%, rgba(12,12,12,0.9) 100%),
-        url('../assets/img/box_3.jpeg') center/cover no-repeat fixed;
+    background: linear-gradient(180deg, var(--color-bg) 0%, rgba(12,12,12,0.9) 100%);
     content-visibility: auto;
 }
 
@@ -914,7 +940,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     background: rgba(12, 12, 12, 0.92);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    z-index: 2000;
+    z-index: 9999;
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
     opacity: 0; visibility: hidden;
@@ -1108,7 +1134,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--color-surface);
     border: 1px solid var(--glass-border);
     color: var(--color-white);
     cursor: pointer;
@@ -1180,7 +1206,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 
 .faq-item:focus-within {
     border-color: var(--color-accent-mid);
-    box-shadow: 0 8px 30px rgba(255, 87, 34, 0.1);
+    box-shadow: 0 8px 30px rgba(234, 46, 238, 0.1);
 }
 
 .faq-question {
@@ -1702,6 +1728,81 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 .info-item svg { flex-shrink: 0; margin-top: 3px; }
 .info-item span { color: var(--color-white-soft); }
 .info-item small { color: var(--color-white-soft); }
+
+/* Responsive: Contacto */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .contact-form {
+        padding: 24px 20px;
+    }
+    .contact-info {
+        padding: 28px 20px;
+    }
+    .info-item {
+        padding: 14px;
+    }
+}
+
+/* Responsive: Footer */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        text-align: center;
+    }
+    .footer-logo p {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+/* Responsive: general mobile refinements */
+@media (max-width: 600px) {
+    .section-title {
+        font-size: clamp(2rem, 8vw, 2.8rem);
+        letter-spacing: 2px;
+    }
+    .section-subtitle {
+        font-size: var(--font-size-base);
+        margin-bottom: 40px;
+    }
+    :root {
+        --section-padding: 60px 16px;
+    }
+    .hero {
+        padding: 120px 16px 60px;
+    }
+    .hero-title {
+        font-size: clamp(2.5rem, 12vw, 3.5rem);
+    }
+    .hero-stats {
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+    .stat-number {
+        font-size: 2rem;
+    }
+    .btn {
+        padding: 12px 24px;
+        font-size: var(--font-size-sm);
+    }
+    .whatsapp-float {
+        width: 52px;
+        height: 52px;
+        bottom: 16px;
+        right: 16px;
+    }
+    .whatsapp-float svg {
+        width: 24px;
+        height: 24px;
+    }
+}
 
 .whatsapp-float {
     position: fixed;
