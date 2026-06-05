@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return mediaLightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
     }
 
-    function openMediaLightbox(src, type, title, poster = null) {
+    function openMediaLightbox(src, type, title, poster = null, sourceCurrentTime = null) {
         lastFocusedMediaEl = document.activeElement; // Store element that opened the lightbox
 
         mediaLightboxBody.innerHTML = ''; // Clear previous content
@@ -423,6 +423,20 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             mediaLightboxBody.appendChild(video);
             currentMediaPlaying = video; // Store reference to current video
+            // Resume from where the source video was and auto-play
+            if (sourceCurrentTime !== null && sourceCurrentTime > 0) {
+                video.addEventListener('loadedmetadata', function () {
+                    video.currentTime = sourceCurrentTime;
+                });
+                video.addEventListener('seeked', function onSeeked() {
+                    video.play().catch(function () {});
+                    video.removeEventListener('seeked', onSeeked);
+                });
+            } else {
+                video.addEventListener('loadedmetadata', function () {
+                    video.play().catch(function () {});
+                });
+            }
         }
 
         mediaLightbox.classList.add('active');
@@ -486,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaExpandBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
             var card = btn.closest('.instagram-card'); // Parent card (community or reel)
-            var mediaSrc, mediaType, mediaTitle, posterSrc = null;
+            var mediaSrc, mediaType, mediaTitle, posterSrc = null, sourceCurrentTime = null;
 
             if (card.classList.contains('community-card')) {
                 var img = card.querySelector('.community-media img');
@@ -502,10 +516,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     mediaType = 'video';
                     mediaTitle = card.querySelector('.instagram-card-title').textContent;
                     posterSrc = video.poster;
+                    sourceCurrentTime = video.currentTime;
+                    video.pause(); // Pause the source so it doesn't keep playing in background
                 }
             }
             if (mediaSrc && mediaType) {
-                openMediaLightbox(mediaSrc, mediaType, mediaTitle, posterSrc);
+                openMediaLightbox(mediaSrc, mediaType, mediaTitle, posterSrc, sourceCurrentTime);
             }
         });
     });
