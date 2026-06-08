@@ -343,7 +343,13 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 /* Hamburger */
 .menu-toggle {
     display: none; flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 8px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer; padding: 8px;
     position: fixed; top: 18px; right: 20px; z-index: 10000;
     width: 44px; height: 44px; align-items: center; justify-content: center;
     opacity: 1; visibility: visible; pointer-events: auto;
