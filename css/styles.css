@@ -217,18 +217,38 @@ html.no-scroll {
 
 .section-title {
     font-family: var(--font-title);
-    font-size: clamp(2.8rem, 7vw, 4.2rem); /* Slightly smaller max size */
+    font-size: clamp(2.8rem, 7vw, 4.2rem);
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
     letter-spacing: 3px;
     color: var(--color-white);
     position: relative;
-    display: inline-block;
+    display: block;
+    text-wrap: balance;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    text-wrap: balance;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for grit */
+    width: 60px; /* Width of the underline */
+    height: 4px; /* Thickness of the underline */
+    background: linear-gradient(90deg, var(--color-accent), var(--color-primary)); /* Gradient for modern look */
+    border-radius: 2px;
+    opacity: 0;
+    transition: width 0.4s ease-out, opacity 0.4s ease-out, transform 0.4s ease-out;
 }
+
+/* Animation for when the section title becomes visible */
+.section-title.visible::after {
+    opacity: 1;
+    width: 100px; /* Expand width when visible */
+}
+
+
 
 /* Removed generic ::before for section-title */
 
@@ -1612,7 +1632,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     position: absolute;
     top: 12px;
     left: 12px;
-    background: var(--color-accent);
+    background: transparent;
     color: var(--color-white);
     padding: 4px 14px;
     border-radius: 50px;
@@ -1622,6 +1642,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     letter-spacing: 1px;
     z-index: 2;
     pointer-events: none;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .instagram-card-footer {
@@ -1678,54 +1699,52 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     margin-bottom: 45px;
 }
 
-/* Community Grid — cards más grandes, 2 columnas en desktop */
-.community-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(360px, 1fr));
-    gap: 32px;
-    max-width: 980px;
+/* Carrusel Horizontal de Comunidad */
+.community-carousel {
+    position: relative;
+    max-width: 900px;
     margin: 0 auto 45px;
+    background: transparent;
 }
 
-.community-card {
-    position: relative;
-    aspect-ratio: 1 / 1;
+.carousel-viewport {
     overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: transparent;
 }
 
-.community-media {
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide {
+    min-width: 100%;
+    aspect-ratio: 4 / 3;
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
+    background: transparent;
 }
 
-.community-media img,
-.community-media video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-.community-card .community-media {
+.carousel-slide .community-media {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    aspect-ratio: auto;
     overflow: hidden;
 }
 
-.community-card .community-media img,
-.community-card .community-media video {
+.carousel-slide .community-media img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     object-position: center;
     display: block;
-    background: var(--color-bg);
+    background: transparent;
 }
 
-.community-card .community-card-content {
+.carousel-slide .community-card-content {
     position: absolute;
     left: 0;
     right: 0;
@@ -1737,6 +1756,90 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.carousel-slide .instagram-card-label {
+    top: 16px;
+    left: 16px;
+}
+
+.carousel-slide:hover .media-expand-overlay {
+    opacity: 1;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    color: var(--color-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.carousel-btn:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 4px 25px var(--color-primary-dim);
+}
+
+.carousel-btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.carousel-prev {
+    left: 16px;
+}
+
+.carousel-next {
+    right: 16px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-muted);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.carousel-dot.active {
+    background: var(--color-primary);
+    transform: scale(1.3);
+}
+
+.carousel-dot:hover {
+    background: var(--color-primary-mid);
+}
+
+.carousel-dot:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
 }
 
 /* Responsive: Reels */
@@ -1752,18 +1855,31 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     }
 }
 
-/* Responsive: Community */
-@media (max-width: 820px) {
-    .community-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
+/* Responsive: Carrusel */
+@media (max-width: 768px) {
+    .carousel-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .carousel-prev {
+        left: 10px;
+    }
+
+    .carousel-next {
+        right: 10px;
     }
 }
 
 @media (max-width: 540px) {
-    .community-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .carousel-btn svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -1781,6 +1897,9 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     .instagram-card-cta {
         transition: none;
     }
+    .carousel-track {
+        transition: none;
+    }
 }
 
 /* 8. CONTACTO */
@@ -1792,7 +1911,24 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
     gap: 35px;
 }
 
+.contact-map {
+    min-height: 700px;
+    border-radius: var(--radius-md); overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.contact-map iframe { width: 100%; height: 100%; display: block; }
+
+.contact-info {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 45px;
+}
+
 .contact-form {
+    grid-column: 1 / -1;
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -1836,29 +1972,22 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 .form-feedback { font-size: 0.85rem; margin-top: 12px; min-height: 1.2em; color: var(--color-accent); }
 .field-error { display: block; font-size: 0.8rem; color: var(--color-accent); min-height: 1.2em; margin-top: 4px; font-weight: 500; }
 
-.contact-map {
-    border-radius: var(--radius-md); overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-.contact-map iframe { display: block; }
-
-.contact-info {
-    grid-column: 1 / -1;
+.contact-form {
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    padding: 45px;
-    margin-top: 10px;
+    padding: 35px;
+    grid-column: 1 / -1;
 }
 .contact-info h3 { font-family: var(--font-title); font-size: var(--font-size-xl); letter-spacing: 2px; margin-bottom: 28px; }
 
 .info-item {
     display: flex; align-items: flex-start; gap: 16px;
-    margin-bottom: 24px; padding: 16px;
+    margin-bottom: 24px; padding: 24px;
     background: var(--color-surface);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     transition: background var(--transition-fast);
 }
 .info-item:hover { background: var(--color-primary-dim); }
@@ -1879,7 +2008,7 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
         padding: 28px 20px;
     }
     .info-item {
-        padding: 14px;
+        padding: 18px;
     }
 }
 
@@ -1902,8 +2031,9 @@ a { text-decoration: none; color: var(--color-primary); } /* Default link color 
 /* Responsive: general mobile refinements */
 @media (max-width: 600px) {
     .section-title {
-        font-size: clamp(2rem, 8vw, 2.8rem);
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
         letter-spacing: 2px;
+        word-break: break-word;
     }
     .section-subtitle {
         font-size: var(--font-size-base);

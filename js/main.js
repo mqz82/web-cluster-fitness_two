@@ -633,6 +633,95 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* ============================================
+       CARRUSEL DE COMUNIDAD (Horizontal)
+    ============================================ */
+    var communityTrack = document.getElementById('communityTrack');
+    var communityPrev = document.getElementById('communityPrev');
+    var communityNext = document.getElementById('communityNext');
+    var communityDots = document.getElementById('communityDots');
+    var communityCurrentSlide = 0;
+    var communityTotalSlides = 0;
+    var communityInterval = null;
+
+    if (communityTrack) {
+        communityTotalSlides = communityTrack.querySelectorAll('.carousel-slide').length;
+
+        // Crear dots
+        if (communityDots) {
+            for (var cd = 0; cd < communityTotalSlides; cd++) {
+                var cdot = document.createElement('button');
+                cdot.className = 'carousel-dot';
+                cdot.setAttribute('aria-label', 'Ir a la imagen ' + (cd + 1));
+                cdot.addEventListener('click', (function (index) {
+                    return function () { communityGoToSlide(index); };
+                })(cd));
+                communityDots.appendChild(cdot);
+            }
+            communityUpdateDots(0);
+        }
+
+        function communityGoToSlide(index) {
+            communityCurrentSlide = index;
+            if (communityCurrentSlide < 0) communityCurrentSlide = communityTotalSlides - 1;
+            if (communityCurrentSlide >= communityTotalSlides) communityCurrentSlide = 0;
+            communityTrack.style.transform = 'translateX(-' + (communityCurrentSlide * 100) + '%)';
+            communityUpdateDots(communityCurrentSlide);
+            communityResetAutoplay();
+        }
+
+        function communityUpdateDots(active) {
+            var dots = communityDots ? communityDots.querySelectorAll('.carousel-dot') : [];
+            dots.forEach(function (dot, i) {
+                if (i === active) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+
+        function communityResetAutoplay() {
+            if (communityInterval) clearInterval(communityInterval);
+            communityInterval = setInterval(function () {
+                communityGoToSlide(communityCurrentSlide + 1);
+            }, 5000);
+        }
+
+        if (communityPrev) communityPrev.addEventListener('click', function () { communityGoToSlide(communityCurrentSlide - 1); });
+        if (communityNext) communityNext.addEventListener('click', function () { communityGoToSlide(communityCurrentSlide + 1); });
+
+        // Pause autoplay on hover/focus
+        var communityCarousel = document.getElementById('communityCarousel');
+        if (communityCarousel) {
+            communityCarousel.addEventListener('mouseenter', function () { if (communityInterval) clearInterval(communityInterval); });
+            communityCarousel.addEventListener('mouseleave', communityResetAutoplay);
+            communityCarousel.addEventListener('focusin', function () { if (communityInterval) clearInterval(communityInterval); });
+            communityCarousel.addEventListener('focusout', communityResetAutoplay);
+        }
+
+        // Keyboard navigation
+        if (communityCarousel) {
+            communityCarousel.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowLeft') { communityGoToSlide(communityCurrentSlide - 1); e.preventDefault(); }
+                if (e.key === 'ArrowRight') { communityGoToSlide(communityCurrentSlide + 1); e.preventDefault(); }
+            });
+        }
+
+        // Touch swipe horizontal
+        var communityTouchStartX = 0;
+        communityTrack.addEventListener('touchstart', function (e) {
+            communityTouchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        communityTrack.addEventListener('touchend', function (e) {
+            var diff = communityTouchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) communityGoToSlide(communityCurrentSlide + 1);
+                else communityGoToSlide(communityCurrentSlide - 1);
+            }
+        });
+
+        communityResetAutoplay();
+    }
+
+
+    /* ============================================
        CONTADORES ANIMADOS (Hero Stats)
     ============================================ */
     var statNumbers = document.querySelectorAll('.stat-number');
