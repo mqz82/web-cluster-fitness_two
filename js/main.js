@@ -34,6 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var scrollThreshold = 50;
 
     function handleScroll() {
+
+        if (window.innerWidth <= 900) {
+            navbar.classList.add('scrolled');
+            return;
+        }
+
         if (window.scrollY > scrollThreshold) {
             navbar.classList.add('scrolled');
         } else {
@@ -180,16 +186,33 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
             var href = this.getAttribute('href');
-            if (href !== '#') {
-                e.preventDefault();
-                var target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+            if (!href || href === '#' || !href.startsWith('#')) {
+                return;
             }
+            var target = document.querySelector(href);
+            if (!target) {
+                return;
+            }
+            e.preventDefault();
+
+            // Ensure mobile menu is closed before scrolling
+            if (typeof toggleMobileMenu === 'function') {
+                toggleMobileMenu(false);
+            }
+
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    var navbar = document.getElementById('navbar');
+                    var navbarHeight = navbar ? navbar.offsetHeight : 80;
+                    var extraSpacing = 24;
+                    var targetTop = target.getBoundingClientRect().top + window.scrollY - navbarHeight - extraSpacing;
+                    var useSmooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    window.scrollTo({
+                        top: targetTop,
+                        behavior: useSmooth ? 'smooth' : 'auto'
+                    });
+                });
+            });
         });
     });
 
@@ -200,12 +223,20 @@ document.addEventListener('DOMContentLoaded', function () {
     var smokeEffect = document.querySelector('.smoke-effect');
     var smokeEffect2 = document.querySelector('.smoke-effect-2');
 
-    if (smokeEffect && smokeEffect2) {
+    if (
+        smokeEffect &&
+        smokeEffect2 &&
+        window.innerWidth > 900
+    ) {
         window.addEventListener('scroll', function () {
             var scrolled = window.pageYOffset;
             var rate = scrolled * 0.2;
-            smokeEffect.style.transform = 'translateY(' + rate + 'px)';
-            smokeEffect2.style.transform = 'translateY(' + (rate * 0.5) + 'px)';
+
+            smokeEffect.style.transform =
+                'translateY(' + rate + 'px)';
+
+            smokeEffect2.style.transform =
+                'translateY(' + (rate * 0.5) + 'px)';
         }, { passive: true });
     }
 
@@ -429,12 +460,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     video.currentTime = sourceCurrentTime;
                 });
                 video.addEventListener('seeked', function onSeeked() {
-                    video.play().catch(function () {});
+                    video.play().catch(function () { });
                     video.removeEventListener('seeked', onSeeked);
                 });
             } else {
                 video.addEventListener('loadedmetadata', function () {
-                    video.play().catch(function () {});
+                    video.play().catch(function () { });
                 });
             }
         }
@@ -456,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         mediaLightbox.classList.remove('active');
         document.documentElement.classList.remove('no-scroll');
-        
+
         if (lastFocusedMediaEl) {
             lastFocusedMediaEl.focus(); // Restore focus to element that opened lightbox
         }
@@ -785,15 +816,23 @@ document.addEventListener('DOMContentLoaded', function () {
     reelVideos.forEach(function (video) {
         var card = video.closest('.instagram-card');
 
-        card.addEventListener('click', function (e) {
+        function toggleReelPlay(e) {
             if (e.target.closest('a')) return;
-        if (e.target.closest('.media-expand-btn')) return;
+            if (e.target.closest('.media-expand-btn')) return;
             if (video.paused) {
                 pauseAllReelsExcept(video);
                 video.muted = false;
-                video.play()['catch'](function () {});
+                video.play()['catch'](function () { });
             } else {
                 video.pause();
+            }
+        }
+
+        card.addEventListener('click', toggleReelPlay);
+        card.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleReelPlay(e);
             }
         });
 
