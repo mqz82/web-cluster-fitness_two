@@ -11,18 +11,18 @@
     /* Negro grafito */
     --color-bg-alt: #2F2F2F;
     /* Gris carbón */
-    --color-primary: #2ECEE1;
+    --color-primary: #00D4E8;
     /* Cian eléctrico */
-    --color-primary-dim: rgba(46, 206, 225, 0.15);
-    --color-primary-mid: rgba(46, 206, 225, 0.4);
-    --color-primary-rgb: 46, 206, 225;
-    --color-accent: #EA2EEE;
+    --color-primary-dim: rgba(0, 212, 232, 0.15);
+    --color-primary-mid: rgba(0, 212, 232, 0.4);
+    --color-primary-rgb: 0, 212, 232;
+    --color-accent: #CC44CC;
     /* Magenta fitness */
-    --color-accent-dim: rgba(234, 46, 238, 0.12);
-    --color-accent-mid: rgba(234, 46, 238, 0.4);
-    --color-warm: #EA2EEE;
+    --color-accent-dim: rgba(204, 68, 204, 0.12);
+    --color-accent-mid: rgba(204, 68, 204, 0.4);
+    --color-warm: #CC44CC;
     /* Magenta fitness (reemplaza amarillo) */
-    --color-warm-dim: rgba(234, 46, 238, 0.14);
+    --color-warm-dim: rgba(204, 68, 204, 0.14);
     --color-white: #FBFCFC;
     /* Blanco puro */
     --color-white-soft: rgba(251, 252, 252, 0.82);
@@ -63,7 +63,7 @@
     /* Simpler ease */
     --transition-smooth: 0.4s ease-out;
     /* Simpler ease */
-    --navbar-height: 80px;
+    --navbar-height: 126px;
     --mobile-navbar-height: 72px;
 }
 
@@ -553,12 +553,10 @@ a {
 }
 
 .logo-img {
-    height: 56px;
+    height: 90px;
     width: auto;
     display: block;
 }
-
-/* Removed .logo-main, .logo-sub, .logo-hexagon as they are not used in HTML or will be simplified */
 
 .nav-links {
     display: flex;
@@ -747,8 +745,8 @@ a {
     .logo img {
         display: block;
         width: auto;
-        height: 46px;
-        max-width: 90px;
+        height: 64px;
+        max-width: 210px;
         object-fit: contain;
     }
 
@@ -3397,6 +3395,31 @@ a {
     margin-bottom: 18px;
 }
 
+.footer-logo-container {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.footer-logo-container .logo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.footer-logo-container .logo-img {
+    width: 100%;
+    height: 100%;
+    max-height: 260px;
+    object-fit: contain;
+}
+
 .footer-logo p {
     color: var(--color-muted);
     font-size: 1rem;
@@ -3474,7 +3497,11 @@ a {
 
 .footer-bottom .address {
     font-size: 0.85rem;
-    opacity: 0.7;
+}
+
+.footer-bottom .credit {
+    font-size: 0.75rem;
+    color: var(--color-muted);
 }
 
 /* ANIMACIONES DE SCROLL */
