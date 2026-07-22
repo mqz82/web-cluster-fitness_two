@@ -410,6 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var lastFocusedMediaEl = null;
     var currentMediaPlaying = null; // To keep track of video playing in lightbox
+    var sourceVideoData = null; // { card, src, poster } — restore source video on close
 
     function getMediaLightboxFocusable() {
         if (!mediaLightbox) return [];
@@ -463,11 +464,30 @@ document.addEventListener('DOMContentLoaded', function () {
         if (focusable.length > 0) focusable[0].focus(); // Focus close button
     }
 
+    function restoreSourceVideo() {
+        if (!sourceVideoData) return;
+        var mediaContainer = sourceVideoData.card.querySelector('.instagram-card-media');
+        if (mediaContainer) {
+            var sourceVideo = mediaContainer.querySelector('video');
+            if (sourceVideo) {
+                var newSource = document.createElement('source');
+                newSource.src = sourceVideoData.src;
+                newSource.type = 'video/mp4';
+                sourceVideo.appendChild(newSource);
+                sourceVideo.load();
+            }
+        }
+        sourceVideoData = null;
+    }
+
     function closeMediaLightbox() {
         if (currentMediaPlaying && !currentMediaPlaying.paused) {
             currentMediaPlaying.pause(); // Pause video if playing
         }
         currentMediaPlaying = null; // Clear video reference
+
+        // Restore source video before clearing lightbox content
+        restoreSourceVideo();
 
         mediaLightbox.classList.remove('active');
         document.documentElement.classList.remove('no-scroll');
@@ -514,6 +534,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add event listeners to expand buttons
     mediaExpandBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
+            // Restore any previously cleared source video before processing new one
+            restoreSourceVideo();
+
             var card = btn.closest('.instagram-card'); // Parent card (community or reel)
             var mediaSrc, mediaType, mediaTitle, posterSrc = null, sourceCurrentTime = null;
 
@@ -533,6 +556,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     posterSrc = video.poster;
                     sourceCurrentTime = video.currentTime;
                     video.pause(); // Pause the source so it doesn't keep playing in background
+                    // Clear source to release browser media pipeline (prevents "two instances" bug)
+                    sourceVideoData = { card: card, src: mediaSrc, poster: posterSrc };
+                    video.querySelectorAll('source').forEach(function (s) { s.remove(); });
+                    video.removeAttribute('src');
+                    video.load();
                 }
             }
             if (mediaSrc && mediaType) {
