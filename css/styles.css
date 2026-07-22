@@ -20,9 +20,7 @@
     /* Magenta fitness */
     --color-accent-dim: rgba(204, 68, 204, 0.12);
     --color-accent-mid: rgba(204, 68, 204, 0.4);
-    --color-warm: #CC44CC;
-    /* Magenta fitness (reemplaza amarillo) */
-    --color-warm-dim: rgba(204, 68, 204, 0.14);
+    /* --color-warm deprecado: usar --color-accent */
     --color-white: #FBFCFC;
     /* Blanco puro */
     --color-white-soft: rgba(251, 252, 252, 0.82);
@@ -487,9 +485,9 @@ a {
 }
 
 .btn-primary:hover {
-    background: var(--color-warm);
+    background: var(--color-accent);
     /* Hover to warm color */
-    border-color: var(--color-warm);
+    border-color: var(--color-accent);
     transform: translateY(-2px);
     box-shadow: 0 6px 22px rgba(234, 46, 238, 0.5);
     /* Adjusted shadow for warm */
@@ -713,7 +711,7 @@ a {
         width: 100%;
         height: var(--mobile-navbar-height);
         min-height: var(--mobile-navbar-height);
-        background: #1C1C1C;
+        background: var(--color-bg);
         transform: none !important;
         translate: none !important;
         opacity: 1 !important;
@@ -793,7 +791,7 @@ a {
         height: calc(100dvh - var(--mobile-navbar-height));
         z-index: 9999;
         overflow-y: auto;
-        background: #1C1C1C;
+        background: var(--color-bg);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
         padding: 24px 24px 40px;
@@ -831,7 +829,7 @@ a {
     position: relative;
     padding: 160px 20px 80px;
     overflow: visible;
-    background-image: url('../assets/img/box_1.webp');
+    background-image: url('../assets/img/cluster_fitness_hero_fondo_web.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -903,7 +901,7 @@ a {
 }
 
 .hero-title .highlight {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-warm));
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent));
     /* Use accent and warm for highlight */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -950,7 +948,7 @@ a {
     font-family: var(--font-title);
     font-size: 2.8rem;
     letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--color-accent), var(--color-warm));
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent));
     /* Use accent and warm for numbers */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2116,7 +2114,7 @@ a {
     display: flex;
     justify-content: center;
     gap: 4px;
-    color: var(--color-warm);
+    color: var(--color-accent);
     /* Use warm color for stars */
     font-size: 1.4rem;
     /* Adjusted size for text stars */
@@ -2581,7 +2579,7 @@ a {
 }
 
 .schedule-legend-dot.tag-zumba {
-    background: var(--color-warm);
+    background: var(--color-accent);
 }
 
 .schedule-legend-dot.tag-metcon {
@@ -2629,7 +2627,7 @@ a {
 }
 
 .schedule-class-tag.tag-zumba {
-    background: var(--color-warm);
+    background: var(--color-accent);
 }
 
 .schedule-class-tag.tag-metcon {

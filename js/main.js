@@ -12,22 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* ============================================
-       MOUSE TRACKING PARA EFECTOS EN CARDS
-       Seguimiento del cursor para glow effects
-    ============================================ */
-    var trackedCards = document.querySelectorAll('.service-card, .discipline-card');
-    trackedCards.forEach(function (card) {
-        card.addEventListener('mousemove', function (e) {
-            var rect = card.getBoundingClientRect();
-            var x = ((e.clientX - rect.left) / rect.width) * 100;
-            var y = ((e.clientY - rect.top) / rect.height) * 100;
-            card.style.setProperty('--mouse-x', x + '%');
-            card.style.setProperty('--mouse-y', y + '%');
-        });
-    });
-
-
-    /* ============================================
        NAVBAR: transparente en top → fondo sólido al scroll
     ============================================ */
     var navbar = document.getElementById('navbar');
@@ -498,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (mediaLightbox) {
         mediaLightbox.addEventListener('keydown', function (e) {
             if (e.key !== 'Tab' || !mediaLightbox.classList.contains('active')) return;
-            var focusable = getModalFocusable(); // Reusing specialist modal's focusable helper. Should ideally be getMediaLightboxFocusable
+            var focusable = getMediaLightboxFocusable();
             if (focusable.length === 0) return;
             var first = focusable[0];
             var last = focusable[focusable.length - 1];
@@ -903,12 +887,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 /* ============================================
-   POLYFILL PARA IntersectionObserver
-   Solo si el navegador no lo soporta
+   FALLBACK: asegurar visibilidad si IntersectionObserver no está disponible
    ============================================ */
 if (!('IntersectionObserver' in window)) {
-    var script = document.createElement('script');
-    script.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
-    script.async = true;
-    document.head.appendChild(script);
+    document.querySelectorAll('[data-animate]').forEach(function (el) {
+        el.classList.add('visible');
+    });
 }

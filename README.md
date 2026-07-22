@@ -5,70 +5,65 @@ Página web oficial de **Cluster Fitness**, box de entrenamiento ubicado en Mapo
 ## 📁 Estructura del Proyecto
 
 ```
-cluster-fitness/
-├── index.html      # Archivo HTML principal
+/
+├── index.html             # Archivo HTML principal (SPA)
 ├── css/
-│   └── styles.css # Estilos CSS completos
+│   ├── styles.css         # Estilos CSS fuente (editar aquí)
+│   └── styles.min.css     # CSS minificado para producción (generado)
 ├── js/
-│   └── main.js     # Funcionalidades JavaScript
-└── README.md       # Este archivo
+│   ├── main.js            # JavaScript fuente (editar aquí)
+│   └── main.min.js        # JS minificado para producción (generado)
+├── assets/
+│   ├── img/               # Imágenes (WebP preferido)
+│   │   ├── coach/         # Fotos de coaches
+│   │   ├── comunidad/     # Fotos de comunidad
+│   │   └── reels/         # Posters de videos
+│   └── videos/
+│       └── reels/         # Videos MP4
+├── package.json           # Dependencias de build (csso, terser)
+├── robots.txt
+├── sitemap.xml
+└── README.md
 ```
 
 ## 🚀 Cómo ejecutar el proyecto
 
-### Opción 1: VSCode con Live Server (Recomendado)
+### Opción 1: Servidor local (Python)
+```bash
+python -m http.server 8000 --bind 127.0.0.1
+```
 
-1. **Instalar VSCode** (si no lo tienes):
-   - Descarga desde: https://code.visualstudio.com/
+### Opción 2: VSCode con Live Server
+1. Instalar extensión "Live Server" (Ritwick Dey)
+2. Abrir carpeta del proyecto
+3. Clic derecho en `index.html` → "Open with Live Server"
 
-2. **Instalar extensión Live Server**:
-   - Abre VSCode
-   - Ve a la barra lateral de extensiones (icono de cuadrados o presiona `Ctrl+Shift+X`)
-   - Busca "Live Server" 
-   - Instala la extensión "Live Server" de Ritwick Dey
+### Opción 3: Abrir directamente en navegador
+- Doble clic en `index.html` (algunas animaciones de scroll pueden no funcionar)
 
-3. **Abrir el proyecto**:
-   - Abre VSCode
-   - Archivo → Abrir carpeta
-   - Selecciona la carpeta `cluster-fitness`
+## 🔧 Comandos de build
 
-4. **Iniciar Live Server**:
-   - Haz clic derecho en `index.html`
-   - Selecciona "Open with Live Server"
-   - O presiona `Ctrl+L, Ctrl+O` (en Windows)
+| Acción | Comando |
+|--------|---------|
+| Minificar CSS | `npx clean-css-cli -o css/styles.min.css css/styles.css` |
+| Minificar JS | `npx terser js/main.js -o js/main.min.js -c passes=2 -m` |
+| Convertir imagen a WebP | `npx sharp-cli -i input.jpg -o output.webp -f webp -q 85` |
 
-5. **Ver el sitio**:
-   - Se abrirá automáticamente en tu navegador predeterminado
-   - Dirección: `http://127.0.0.1:5500/index.html`
-
-### Opción 2: Abrir directamente en navegador
-
-1. Navega a la carpeta `cluster-fitness`
-2. Haz doble clic en `index.html`
-3. Se abrirá en tu navegador predeterminado
-
-> ⚠️ **Nota**: Con esta opción algunas funcionalidades como animaciones de scroll seguirán funcionando, pero el menú móvil podría tener comportamiento limitado.
+**Importante**: Editar siempre los archivos fuente (`styles.css`, `main.js`), no los minificados. Después de cambios, re-minificar. El HTML carga los archivos `.min.*` en producción.
 
 ## 🎨 Características implementadas
 
-- ✅ Paleta de colores oficial (Instagram)
+- ✅ Paleta de colores CSS custom properties
 - ✅ Tipografía: Bebas Neue + Barlow (Google Fonts)
-- ✅ Efecto de humo/neblina con radial-gradient + blur
-- ✅ Logo con hexágono
-- ✅ 9 secciones completas
-- ✅ Responsive (mobile-first: 320px → 768px → 1280px+)
+- ✅ Diseño responsive (320px → 768px → 1280px+)
 - ✅ Animaciones con IntersectionObserver
 - ✅ Navbar con transición al hacer scroll
-- ✅ Formulario de contacto funcional
-- ✅ Iconos SVG inline (sin dependencias externas)
-- ✅ Botones estilo neón
-
-## 📱 Ver en diferentes tamaños
-
-En el navegador Chrome/Edge:
-1. Presiona `F12` para abrir DevTools
-2. Haz clic en el icono de dispositivo (toggle device toolbar)
-3. Selecciona diferentes dispositivos o ajusta el ancho manualmente
+- ✅ Formulario de contacto (UI)
+- ✅ Galería de reels con video
+- ✅ Carrusel de testimonios y comunidad
+- ✅ FAQ con acordeón
+- ✅ Modal lightbox para imágenes
+- ✅ Lazy loading de imágenes y fondos
 
 ## 🔗 Enlaces oficiales
 
@@ -79,8 +74,9 @@ En el navegador Chrome/Edge:
 ## 📝 Requisitos técnicos
 
 - Navegador moderno (Chrome, Firefox, Safari, Edge)
-- Conexión a internet (para cargar Google Fonts)
-- VSCode + Live Server (para desarrollo)
+- Conexión a internet (Google Fonts)
+- Node.js (para build)
+- VSCode + Live Server (opcional, para desarrollo)
 
 ---
 

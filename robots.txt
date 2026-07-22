@@ -1,4 +1,5 @@
-# Versión mejorada — 2026-06-04 — cambios aplicados: Generación de Robots.txt
 User-agent: *
 Allow: /
-Sitemap: http://localhost:8000/sitemap.xml
+
+# Sitemap: reemplazar DOMINIO_PENDIENTE cuando exista dominio oficial
+# Sitemap: https://DOMINIO_PENDIENTE/sitemap.xml
