@@ -411,6 +411,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var lastFocusedMediaEl = null;
     var currentMediaPlaying = null; // To keep track of video playing in lightbox
     var sourceVideoData = null; // { card, src, poster } — restore source video on close
+    var communityLightboxIndex = -1; // Index of community carousel slide shown in lightbox
+    var mediaLightboxPrev = document.querySelector('.media-lightbox-prev');
+    var mediaLightboxNext = document.querySelector('.media-lightbox-next');
 
     function getMediaLightboxFocusable() {
         if (!mediaLightbox) return [];
@@ -418,7 +421,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openMediaLightbox(src, type, title, poster = null, sourceCurrentTime = null) {
-        lastFocusedMediaEl = document.activeElement; // Store element that opened the lightbox
+        var isAlreadyOpen = mediaLightbox.classList.contains('active');
+
+        // Store focus only on initial open, not on navigation
+        if (!isAlreadyOpen) {
+            lastFocusedMediaEl = document.activeElement;
+        }
 
         mediaLightboxBody.innerHTML = ''; // Clear previous content
         mediaLightboxTitle.textContent = title;
@@ -455,13 +463,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        mediaLightbox.classList.add('active');
-        document.documentElement.classList.add('no-scroll');
-        var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
+        if (!isAlreadyOpen) {
+            mediaLightbox.classList.add('active');
+            document.documentElement.classList.add('no-scroll');
+            var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
 
-        var focusable = getMediaLightboxFocusable();
-        if (focusable.length > 0) focusable[0].focus(); // Focus close button
+            var focusable = getMediaLightboxFocusable();
+            if (focusable.length > 0) focusable[0].focus(); // Focus close button
+        }
     }
 
     function restoreSourceVideo() {
@@ -480,6 +490,31 @@ document.addEventListener('DOMContentLoaded', function () {
         sourceVideoData = null;
     }
 
+    function navigateMediaLightbox(direction) {
+        if (communityLightboxIndex < 0) return;
+
+        var slides = communityTrack ? communityTrack.querySelectorAll('.carousel-slide') : [];
+        if (!slides || slides.length === 0) return;
+
+        communityLightboxIndex += direction;
+        if (communityLightboxIndex < 0) communityLightboxIndex = slides.length - 1;
+        if (communityLightboxIndex >= slides.length) communityLightboxIndex = 0;
+
+        communityGoToSlide(communityLightboxIndex);
+
+        var slide = slides[communityLightboxIndex];
+        if (!slide) return;
+
+        var img = slide.querySelector('.community-media img');
+        if (!img) return;
+
+        var title = img.alt || '';
+        var titleEl = slide.querySelector('.instagram-card-title');
+        if (titleEl) title = titleEl.textContent;
+
+        openMediaLightbox(img.src, 'image', title);
+    }
+
     function closeMediaLightbox() {
         if (currentMediaPlaying && !currentMediaPlaying.paused) {
             currentMediaPlaying.pause(); // Pause video if playing
@@ -490,7 +525,10 @@ document.addEventListener('DOMContentLoaded', function () {
         restoreSourceVideo();
 
         mediaLightbox.classList.remove('active');
+        mediaLightbox.classList.remove('has-nav');
         document.documentElement.classList.remove('no-scroll');
+
+        communityLightboxIndex = -1; // Reset community navigation
 
         if (lastFocusedMediaEl) {
             lastFocusedMediaEl.focus(); // Restore focus to element that opened lightbox
@@ -501,20 +539,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (mediaLightbox) {
         mediaLightbox.addEventListener('keydown', function (e) {
-            if (e.key !== 'Tab' || !mediaLightbox.classList.contains('active')) return;
-            var focusable = getMediaLightboxFocusable();
-            if (focusable.length === 0) return;
-            var first = focusable[0];
-            var last = focusable[focusable.length - 1];
-            if (e.shiftKey) {
-                if (document.activeElement === first) {
-                    e.preventDefault();
-                    last.focus();
+            if (!mediaLightbox.classList.contains('active')) return;
+
+            // Tab trap
+            if (e.key === 'Tab') {
+                var focusable = getMediaLightboxFocusable();
+                if (focusable.length === 0) return;
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
                 }
-            } else {
-                if (document.activeElement === last) {
+                return;
+            }
+
+            // Arrow navigation for community images
+            if (communityLightboxIndex >= 0) {
+                if (e.key === 'ArrowLeft') {
+                    navigateMediaLightbox(-1);
                     e.preventDefault();
-                    first.focus();
+                } else if (e.key === 'ArrowRight') {
+                    navigateMediaLightbox(1);
+                    e.preventDefault();
                 }
             }
         });
@@ -529,6 +583,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (mediaLightboxClose) {
         mediaLightboxClose.addEventListener('click', closeMediaLightbox);
+    }
+
+    // Lightbox prev/next button listeners
+    if (mediaLightboxPrev) {
+        mediaLightboxPrev.addEventListener('click', function () { navigateMediaLightbox(-1); });
+    }
+    if (mediaLightboxNext) {
+        mediaLightboxNext.addEventListener('click', function () { navigateMediaLightbox(1); });
+    }
+
+    // Touch swipe inside lightbox for community images
+    var lightboxTouchStartX = 0;
+    var lightboxTouchStartY = 0;
+    var lightboxIsSwiping = false;
+
+    if (mediaLightboxBody) {
+        mediaLightboxBody.addEventListener('touchstart', function (e) {
+            if (communityLightboxIndex < 0) return;
+            lightboxTouchStartX = e.touches[0].clientX;
+            lightboxTouchStartY = e.touches[0].clientY;
+            lightboxIsSwiping = false;
+        }, { passive: true });
+
+        mediaLightboxBody.addEventListener('touchmove', function (e) {
+            if (e.touches.length !== 1 || communityLightboxIndex < 0) return;
+            var dx = Math.abs(e.touches[0].clientX - lightboxTouchStartX);
+            var dy = Math.abs(e.touches[0].clientY - lightboxTouchStartY);
+            if (dx > dy && dx > 10) {
+                lightboxIsSwiping = true;
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        mediaLightboxBody.addEventListener('touchend', function (e) {
+            if (!lightboxIsSwiping || communityLightboxIndex < 0) return;
+            var diff = lightboxTouchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                navigateMediaLightbox(diff > 0 ? 1 : -1);
+            }
+        });
     }
 
     // Add event listeners to expand buttons
@@ -546,6 +640,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     mediaSrc = img.src;
                     mediaType = 'image';
                     mediaTitle = img.alt || card.querySelector('.instagram-card-title').textContent;
+                    // Track which carousel slide was opened
+                    if (communityTrack) {
+                        var slides = communityTrack.querySelectorAll('.carousel-slide');
+                        var slideIndex = Array.prototype.indexOf.call(slides, card);
+                        communityLightboxIndex = slideIndex >= 0 ? slideIndex : communityCurrentSlide;
+                        mediaLightbox.classList.add('has-nav');
+                    }
                 }
             } else if (card.classList.contains('reel-card')) {
                 var video = card.querySelector('.instagram-card-media video');
@@ -747,12 +848,33 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // Touch swipe horizontal
+        // Touch swipe with direction lock
         var communityTouchStartX = 0;
+        var communityTouchStartY = 0;
+        var communityTouchDiffX = 0;
+        var communityTouchDiffY = 0;
+        var communityIsSwiping = false;
+
         communityTrack.addEventListener('touchstart', function (e) {
             communityTouchStartX = e.touches[0].clientX;
+            communityTouchStartY = e.touches[0].clientY;
+            communityTouchDiffX = 0;
+            communityTouchDiffY = 0;
+            communityIsSwiping = false;
         }, { passive: true });
+
+        communityTrack.addEventListener('touchmove', function (e) {
+            if (e.touches.length !== 1) return;
+            var dx = Math.abs(e.touches[0].clientX - communityTouchStartX);
+            var dy = Math.abs(e.touches[0].clientY - communityTouchStartY);
+            if (dx > dy && dx > 10) {
+                communityIsSwiping = true;
+                e.preventDefault();
+            }
+        }, { passive: false });
+
         communityTrack.addEventListener('touchend', function (e) {
+            if (!communityIsSwiping) return;
             var diff = communityTouchStartX - e.changedTouches[0].clientX;
             if (Math.abs(diff) > 50) {
                 if (diff > 0) communityGoToSlide(communityCurrentSlide + 1);
