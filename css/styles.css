@@ -1696,6 +1696,10 @@ a {
     background: var(--color-primary);
 }
 
+.plan-card .plan-badge.badge-morado {
+    background: var(--color-accent);
+}
+
 .plan-price {
     font-family: var(--font-title);
     font-size: var(--font-size-2xl);
