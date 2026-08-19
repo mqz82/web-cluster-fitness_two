@@ -80,4 +80,19 @@ python -m http.server 8000 --bind 127.0.0.1
 
 ---
 
+## Bitácora de cambios
+
+### 2026-08-19 - Actualización planes, horarios y mejoras visuales
+
+Cambios realizados:
+
+- Ajuste tamaño y posición del logo en header.
+- Actualización nombres y estructura de planes.
+- Actualización horarios temporada 2026.
+- Cambio hero badge a "Entrenamiento + comunidad + salud".
+- Rediseño visual tarjetas de planes y precios.
+
+Commit asociado:
+`feat: actualización planes, horarios 2026 y mejoras visuales`
+
 Desarrollado con ❤️ para Cluster Fitness Santiago, Chile
