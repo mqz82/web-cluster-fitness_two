@@ -95,7 +95,7 @@ Cambios realizados:
 Commit asociado:
 `feat: actualización planes, horarios 2026 y mejoras visuales`
 
-2026-08-19 - Actualización planes HYBRID.
+### 2026-08-19 - Actualización planes HYBRID.
 Cambios realizados:
 
 Actualización nombres y estructura de planes.
